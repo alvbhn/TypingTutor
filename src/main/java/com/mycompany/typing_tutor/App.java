@@ -54,13 +54,21 @@ public class App extends Application {
         Button mButton = new Button("M");
 
         HBox firstRow = new HBox(10, qButton, wButton, eButton, rButton,
-                tButton, yButton, uButton, iButton, oButton, pButton);
+        tButton, yButton, uButton, iButton, oButton, pButton);
         HBox secondRow = new HBox(10, aButton, sButton, dButton, fButton,
         gButton, hButton, jButton, kButton, lButton);
         HBox thirdRow = new HBox(10, shiftButton, zButton, xButton, cButton,
         vButton, bButton, nButton, mButton);
         
-        VBox root = new VBox(textToType, responseField, firstRow, secondRow, thirdRow);
+        Button spaceButton = new Button("Space");
+        Button backspaceButton = new Button("Backspace");
+        Button commaButton = new Button(",");
+        Button periodButton = new Button(".");
+
+        HBox fourthRow = new HBox(10, spaceButton, backspaceButton);
+        
+        VBox root = new VBox(textToType, responseField, firstRow,
+                secondRow,thirdRow, fourthRow, commaButton, periodButton);
 
         Scene scene = new Scene(root, 700, 500);
 
