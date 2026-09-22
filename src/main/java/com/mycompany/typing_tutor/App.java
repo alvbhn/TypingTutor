@@ -52,23 +52,23 @@ public class App extends Application {
         Button bButton = new Button("B");
         Button nButton = new Button("N");
         Button mButton = new Button("M");
-
-        HBox firstRow = new HBox(10, qButton, wButton, eButton, rButton,
-        tButton, yButton, uButton, iButton, oButton, pButton);
-        HBox secondRow = new HBox(10, aButton, sButton, dButton, fButton,
-        gButton, hButton, jButton, kButton, lButton);
-        HBox thirdRow = new HBox(10, shiftButton, zButton, xButton, cButton,
-        vButton, bButton, nButton, mButton);
         
         Button spaceButton = new Button("Space");
         Button backspaceButton = new Button("Backspace");
         Button commaButton = new Button(",");
         Button periodButton = new Button(".");
 
+        HBox firstRow = new HBox(10, qButton, wButton, eButton, rButton,
+        tButton, yButton, uButton, iButton, oButton, pButton);
+        HBox secondRow = new HBox(10, aButton, sButton, dButton, fButton,
+        gButton, hButton, jButton, kButton, lButton);
+        HBox thirdRow = new HBox(10, shiftButton, zButton, xButton, cButton,
+        vButton, bButton, nButton, mButton, commaButton, periodButton);
+        
         HBox fourthRow = new HBox(10, spaceButton, backspaceButton);
         
         VBox root = new VBox(textToType, responseField, firstRow,
-                secondRow,thirdRow, fourthRow, commaButton, periodButton);
+                secondRow,thirdRow, fourthRow);
 
         Scene scene = new Scene(root, 700, 500);
 
