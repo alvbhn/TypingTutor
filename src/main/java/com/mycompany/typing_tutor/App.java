@@ -33,6 +33,7 @@ public class App extends Application {
         Button iButton = new Button("I");
         Button oButton = new Button("O");
         Button pButton = new Button("P");
+        
         Button aButton = new Button("A");
         Button sButton = new Button("S");
         Button dButton = new Button("D");
@@ -42,15 +43,24 @@ public class App extends Application {
         Button jButton = new Button("J");
         Button kButton = new Button("K");
         Button lButton = new Button("L");
+        
+        Button shiftButton = new Button("Shift");
+        Button zButton = new Button("Z");
+        Button xButton = new Button("X");
+        Button cButton = new Button("C");
+        Button vButton = new Button("V");
+        Button bButton = new Button("B");
+        Button nButton = new Button("N");
+        Button mButton = new Button("M");
 
         HBox firstRow = new HBox(10, qButton, wButton, eButton, rButton,
                 tButton, yButton, uButton, iButton, oButton, pButton);
         HBox secondRow = new HBox(10, aButton, sButton, dButton, fButton,
         gButton, hButton, jButton, kButton, lButton);
+        HBox thirdRow = new HBox(10, shiftButton, zButton, xButton, cButton,
+        vButton, bButton, nButton, mButton);
         
-        
-        
-        VBox root = new VBox(textToType, responseField, firstRow, secondRow);
+        VBox root = new VBox(textToType, responseField, firstRow, secondRow, thirdRow);
 
         Scene scene = new Scene(root, 700, 500);
 
