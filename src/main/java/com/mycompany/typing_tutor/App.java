@@ -5,6 +5,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
@@ -20,7 +21,6 @@ public class App extends Application {
     public void start(Stage stage) {
         
         Label textToType = new Label("Text to type");
-        
         TextField responseField = new TextField();
                 
         Button qButton = new Button("Q");
@@ -57,18 +57,50 @@ public class App extends Application {
         Button backspaceButton = new Button("Backspace");
         Button commaButton = new Button(",");
         Button periodButton = new Button(".");
+        
+        GridPane keyboard = new GridPane();
 
-        HBox firstRow = new HBox(10, qButton, wButton, eButton, rButton,
-        tButton, yButton, uButton, iButton, oButton, pButton);
-        HBox secondRow = new HBox(10, aButton, sButton, dButton, fButton,
-        gButton, hButton, jButton, kButton, lButton);
-        HBox thirdRow = new HBox(10, shiftButton, zButton, xButton, cButton,
-        vButton, bButton, nButton, mButton, commaButton, periodButton);
+        keyboard.setHgap(10);
+        keyboard.setVgap(10);
         
-        HBox fourthRow = new HBox(10, spaceButton, backspaceButton);
+        keyboard.add(qButton, 0, 0);
+        keyboard.add(wButton, 1, 0);
+        keyboard.add(eButton, 2, 0);
+        keyboard.add(rButton, 3, 0);
+        keyboard.add(tButton, 4, 0);
+        keyboard.add(yButton, 5, 0);
+        keyboard.add(uButton, 6, 0);
+        keyboard.add(iButton, 7, 0);
+        keyboard.add(oButton, 8, 0);
+        keyboard.add(pButton, 9, 0);
+
+        keyboard.add(aButton, 0, 1);
+        keyboard.add(sButton, 1, 1);
+        keyboard.add(dButton, 2, 1);
+        keyboard.add(fButton, 3, 1);
+        keyboard.add(gButton, 4, 1);
+        keyboard.add(hButton, 5, 1);
+        keyboard.add(jButton, 6, 1);
+        keyboard.add(kButton, 7, 1);
+        keyboard.add(lButton, 8, 1);
+
+        keyboard.add(shiftButton, 0, 2);
+        keyboard.add(zButton, 1, 2);
+        keyboard.add(xButton, 2, 2);
+        keyboard.add(cButton, 3, 2);
+        keyboard.add(vButton, 4, 2);
+        keyboard.add(bButton, 5, 2);
+        keyboard.add(nButton, 6, 2);
+        keyboard.add(mButton, 7, 2);
+        keyboard.add(commaButton, 8, 2);
+        keyboard.add(periodButton, 9, 2);
+
+        keyboard.add(spaceButton, 0, 3);
+        keyboard.add(backspaceButton, 1, 3);
         
-        VBox root = new VBox(textToType, responseField, firstRow,
-                secondRow,thirdRow, fourthRow);
+        HBox bottomRow = new HBox(10, spaceButton, backspaceButton);
+
+        VBox root = new VBox(textToType, responseField, keyboard, bottomRow);
 
         Scene scene = new Scene(root, 700, 500);
 
