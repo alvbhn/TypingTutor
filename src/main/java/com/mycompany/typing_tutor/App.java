@@ -5,9 +5,9 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.input.KeyCode;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
@@ -21,6 +21,7 @@ public class App extends Application {
     public void start(Stage stage) {
         
         Label textToType = new Label("Text to type");
+        Label keyPressedLabel = new Label("");
         TextField responseField = new TextField();
                 
         Button qButton = new Button("Q");
@@ -95,18 +96,25 @@ public class App extends Application {
         keyboard.add(commaButton, 8, 2);
         keyboard.add(periodButton, 9, 2);
 
-        keyboard.add(spaceButton, 0, 3);
-        keyboard.add(backspaceButton, 1, 3);
-        
         HBox bottomRow = new HBox(10, spaceButton, backspaceButton);
 
-        VBox root = new VBox(textToType, responseField, keyboard, bottomRow);
+        VBox root = new VBox(textToType, responseField, keyboard, bottomRow, keyPressedLabel);
 
         Scene scene = new Scene(root, 700, 500);
+        
+        scene.setOnKeyPressed(event -> {
+            KeyCode keyCode = event.getCode();
+            keyPressedLabel.setText(keyCode.getName());
+    });
+
+    scene.setOnKeyReleased(event -> {
+    });
 
         stage.setTitle("Typing Tutor");
         stage.setScene(scene);
         stage.show();
+        
+        root.requestFocus();
     }
 
     public static void main(String[] args) {
