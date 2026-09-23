@@ -107,8 +107,15 @@ public class App extends Application {
             keyPressedLabel.setText(keyCode.getName());
     });
 
-    scene.setOnKeyReleased(event -> {
-    });
+        scene.setOnKeyReleased(event -> {
+            KeyCode keyCode = event.getCode();
+            String keyText = event.getText();
+            keyPressedLabel.setText(keyCode.getName());
+
+            if (!keyText.equals("")) {
+                responseField.setText(responseField.getText() + keyText);
+            }
+        });
 
         stage.setTitle("Typing Tutor");
         stage.setScene(scene);
