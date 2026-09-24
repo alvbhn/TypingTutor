@@ -18,6 +18,8 @@ import javafx.stage.Stage;
  * @author Alvee Ahsan Bhuiyan
  */
 public class App extends Application {
+    
+    private int currentTextNumber = 1;
 
     @Override
     public void start(Stage stage) {
@@ -101,6 +103,16 @@ public class App extends Application {
         
         HashMap<KeyCode, Button> keyMap = new HashMap<>();
         StringBuilder typedText = new StringBuilder();
+        HashMap<Integer, String> sampleTexts = new HashMap<>();
+
+        sampleTexts.put(1, "Try typing this text. Do it as quickly and accurately as you can.");
+        sampleTexts.put(2, "Next type another line of input data.");
+        sampleTexts.put(3, "The quick brown fox jumps over the lazy dog.");
+        sampleTexts.put(4, "Five big quacking zephyrs jolt my wax bed.");
+        sampleTexts.put(5, "Sympathizing would fix Quaker objectives.");
+        sampleTexts.put(6, "A large fawn jumped quickly over white zinc boxes.");
+
+        textToType.setText(sampleTexts.get(currentTextNumber));
 
         keyMap.put(KeyCode.Q, qButton);
         keyMap.put(KeyCode.W, wButton);
