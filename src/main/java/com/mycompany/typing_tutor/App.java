@@ -15,6 +15,7 @@ import javafx.stage.Stage;
 
 /**
  * JavaFX App
+ * @author Alvee Ahsan Bhuiyan
  */
 public class App extends Application {
 
@@ -99,6 +100,7 @@ public class App extends Application {
         keyboard.add(periodButton, 9, 2);
         
         HashMap<KeyCode, Button> keyMap = new HashMap<>();
+        StringBuilder typedText = new StringBuilder();
 
         keyMap.put(KeyCode.Q, qButton);
         keyMap.put(KeyCode.W, wButton);
@@ -137,7 +139,6 @@ public class App extends Application {
         
         notHandledLabel.setStyle("-fx-text-fill: red;");
 
-
         HBox bottomRow = new HBox(10, spaceButton, backspaceButton);
 
         VBox root = new VBox(textToType, responseField, keyboard, bottomRow, keyPressedLabel, notHandledLabel);
@@ -154,9 +155,20 @@ public class App extends Application {
                 virtualKey.setStyle("-fx-background-color: lightblue;");
                 notHandledLabel.setText("");
                 
-                if (!keyText.equals("")) {
-                    responseField.setText(responseField.getText() + keyText);
+                if (keyCode == KeyCode.BACK_SPACE) {
+
+                    if (typedText.length() > 0) {
+                        typedText.deleteCharAt(typedText.length() - 1);
+                    }
+
+                    responseField.setText(typedText.toString());
+
+                } else if (!keyText.equals("")) {
+
+                    typedText.append(keyText);
+                    responseField.setText(typedText.toString());
                 }
+
             } else {
                 notHandledLabel.setText("Not handled");
             }
