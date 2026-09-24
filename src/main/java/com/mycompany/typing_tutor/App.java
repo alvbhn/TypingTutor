@@ -1,5 +1,6 @@
 package com.mycompany.typing_tutor;
 
+import java.util.HashMap;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -22,6 +23,7 @@ public class App extends Application {
         
         Label textToType = new Label("Text to type");
         Label keyPressedLabel = new Label("");
+        Label notHandledLabel = new Label("");
         TextField responseField = new TextField();
                 
         Button qButton = new Button("Q");
@@ -95,28 +97,80 @@ public class App extends Application {
         keyboard.add(mButton, 7, 2);
         keyboard.add(commaButton, 8, 2);
         keyboard.add(periodButton, 9, 2);
+        
+        HashMap<KeyCode, Button> keyMap = new HashMap<>();
+
+        keyMap.put(KeyCode.Q, qButton);
+        keyMap.put(KeyCode.W, wButton);
+        keyMap.put(KeyCode.E, eButton);
+        keyMap.put(KeyCode.R, rButton);
+        keyMap.put(KeyCode.T, tButton);
+        keyMap.put(KeyCode.Y, yButton);
+        keyMap.put(KeyCode.U, uButton);
+        keyMap.put(KeyCode.I, iButton);
+        keyMap.put(KeyCode.O, oButton);
+        keyMap.put(KeyCode.P, pButton);
+
+        keyMap.put(KeyCode.A, aButton);
+        keyMap.put(KeyCode.S, sButton);
+        keyMap.put(KeyCode.D, dButton);
+        keyMap.put(KeyCode.F, fButton);
+        keyMap.put(KeyCode.G, gButton);
+        keyMap.put(KeyCode.H, hButton);
+        keyMap.put(KeyCode.J, jButton);
+        keyMap.put(KeyCode.K, kButton);
+        keyMap.put(KeyCode.L, lButton);
+
+        keyMap.put(KeyCode.SHIFT, shiftButton);
+        keyMap.put(KeyCode.Z, zButton);
+        keyMap.put(KeyCode.X, xButton);
+        keyMap.put(KeyCode.C, cButton);
+        keyMap.put(KeyCode.V, vButton);
+        keyMap.put(KeyCode.B, bButton);
+        keyMap.put(KeyCode.N, nButton);
+        keyMap.put(KeyCode.M, mButton);
+
+        keyMap.put(KeyCode.SPACE, spaceButton);
+        keyMap.put(KeyCode.BACK_SPACE, backspaceButton);
+        keyMap.put(KeyCode.COMMA, commaButton);
+        keyMap.put(KeyCode.PERIOD, periodButton);
+        
+        notHandledLabel.setStyle("-fx-text-fill: red;");
+
 
         HBox bottomRow = new HBox(10, spaceButton, backspaceButton);
 
-        VBox root = new VBox(textToType, responseField, keyboard, bottomRow, keyPressedLabel);
+        VBox root = new VBox(textToType, responseField, keyboard, bottomRow, keyPressedLabel, notHandledLabel);
 
         Scene scene = new Scene(root, 700, 500);
         
         scene.setOnKeyPressed(event -> {
             KeyCode keyCode = event.getCode();
-            keyPressedLabel.setText(keyCode.getName());
-    });
-
-        scene.setOnKeyReleased(event -> {
-            KeyCode keyCode = event.getCode();
             String keyText = event.getText();
+            Button virtualKey = keyMap.get(keyCode);
             keyPressedLabel.setText(keyCode.getName());
-
-            if (!keyText.equals("")) {
-                responseField.setText(responseField.getText() + keyText);
+            
+            if (virtualKey != null) {
+                virtualKey.setStyle("-fx-background-color: lightblue;");
+                notHandledLabel.setText("");
+                
+                if (!keyText.equals("")) {
+                    responseField.setText(responseField.getText() + keyText);
+                }
+            } else {
+                notHandledLabel.setText("Not handled");
             }
         });
 
+        scene.setOnKeyReleased(event -> {
+            KeyCode keyCode = event.getCode();
+            Button virtualKey = keyMap.get(keyCode);
+
+            if (virtualKey != null) {
+                virtualKey.setStyle("");
+            }
+        });
+            
         stage.setTitle("Typing Tutor");
         stage.setScene(scene);
         stage.show();
