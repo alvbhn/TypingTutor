@@ -20,6 +20,7 @@ import javafx.stage.Stage;
 public class App extends Application {
     
     private int currentTextNumber = 1;
+    private boolean shiftPressed = false;
 
     @Override
     public void start(Stage stage) {
@@ -163,6 +164,10 @@ public class App extends Application {
             Button virtualKey = keyMap.get(keyCode);
             keyPressedLabel.setText(keyCode.getName());
             
+            if (keyCode == KeyCode.SHIFT) {
+                shiftPressed = true;
+            }
+            
             if (virtualKey != null) {
                 virtualKey.setStyle("-fx-background-color: lightblue;");
                 notHandledLabel.setText("");
@@ -177,11 +182,16 @@ public class App extends Application {
 
                 } else if (!keyText.equals("")) {
 
+                    if (shiftPressed) {
+                        keyText = keyText.toUpperCase();
+                    }
+
                     typedText.append(keyText);
                     responseField.setText(typedText.toString());
                 }
 
             } else {
+                
                 notHandledLabel.setText("Not handled");
             }
         });
@@ -192,6 +202,10 @@ public class App extends Application {
 
             if (virtualKey != null) {
                 virtualKey.setStyle("");
+            }
+            
+            if (keyCode == KeyCode.SHIFT) {
+                shiftPressed = false;
             }
         });
             
