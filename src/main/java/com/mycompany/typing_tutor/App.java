@@ -2,6 +2,8 @@ package com.mycompany.typing_tutor;
 
 import java.util.HashMap;
 import javafx.application.Application;
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -12,13 +14,13 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
-
 /**
  * JavaFX App
+ *
  * @author Alvee Ahsan Bhuiyan
  */
 public class App extends Application {
-    
+
     private int currentTextNumber = 1;
     private boolean shiftPressed = false;
     private int correctKeyStrokes = 0;
@@ -27,14 +29,19 @@ public class App extends Application {
     private StringBuilder typedText = new StringBuilder();
     private Label textToType = new Label("Text to type");
 
-
     @Override
     public void start(Stage stage) {
-        
         Label keyPressedLabel = new Label("");
         Label notHandledLabel = new Label("");
         TextField responseField = new TextField();
-                
+        GridPane keyboard = new GridPane();
+
+        keyboard.setHgap(15);
+        keyboard.setVgap(15);
+        keyboard.setAlignment(Pos.CENTER);
+        keyboard.setPadding(new Insets(20));
+        keyboard.setStyle("-fx-font-size: 18px;");
+
         Button qButton = new Button("Q");
         Button wButton = new Button("W");
         Button eButton = new Button("E");
@@ -45,7 +52,7 @@ public class App extends Application {
         Button iButton = new Button("I");
         Button oButton = new Button("O");
         Button pButton = new Button("P");
-        
+
         Button aButton = new Button("A");
         Button sButton = new Button("S");
         Button dButton = new Button("D");
@@ -55,7 +62,7 @@ public class App extends Application {
         Button jButton = new Button("J");
         Button kButton = new Button("K");
         Button lButton = new Button("L");
-        
+
         Button shiftButton = new Button("Shift");
         Button zButton = new Button("Z");
         Button xButton = new Button("X");
@@ -64,17 +71,12 @@ public class App extends Application {
         Button bButton = new Button("B");
         Button nButton = new Button("N");
         Button mButton = new Button("M");
-        
+
         Button spaceButton = new Button("Space");
         Button backspaceButton = new Button("Backspace");
         Button commaButton = new Button(",");
         Button periodButton = new Button(".");
-        
-        GridPane keyboard = new GridPane();
 
-        keyboard.setHgap(10);
-        keyboard.setVgap(10);
-        
         keyboard.add(qButton, 0, 0);
         keyboard.add(wButton, 1, 0);
         keyboard.add(eButton, 2, 0);
@@ -106,7 +108,7 @@ public class App extends Application {
         keyboard.add(mButton, 7, 2);
         keyboard.add(commaButton, 8, 2);
         keyboard.add(periodButton, 9, 2);
-        
+
         HashMap<KeyCode, Button> keyMap = new HashMap<>();
         HashMap<Integer, String> sampleTexts = new HashMap<>();
 
@@ -153,30 +155,60 @@ public class App extends Application {
         keyMap.put(KeyCode.BACK_SPACE, backspaceButton);
         keyMap.put(KeyCode.COMMA, commaButton);
         keyMap.put(KeyCode.PERIOD, periodButton);
+
+        HBox bottomRow = new HBox(20, spaceButton, backspaceButton);
+
+        bottomRow.setAlignment(Pos.CENTER);
+        bottomRow.setPadding(new Insets(10));
         
-        notHandledLabel.setStyle("-fx-text-fill: red;");
-
-        HBox bottomRow = new HBox(10, spaceButton, backspaceButton);
-
-        Button nextButton = new Button("Next");
+        Button nextButton = new Button("Go to next input text");
         Label textCounterLabel = new Label("1 of 6");
-        Button resetButton = new Button("Reset");
+        Button resetButton = new Button("Clear text");
 
-        HBox navigationRow = new HBox(
-                10,
-                nextButton,
-                textCounterLabel,
-                resetButton);
+        HBox buttonRow = new HBox(10, nextButton, resetButton);
+        buttonRow.setAlignment(Pos.CENTER);
 
-        VBox root = new VBox(textToType, responseField, keyboard, bottomRow,
-                keyPressedLabel, notHandledLabel, statsLabel, navigationRow);
+        VBox navigationRow = new VBox(10, buttonRow, textCounterLabel);
+        
+        navigationRow.setAlignment(Pos.CENTER);
+        
+        responseField.setStyle("-fx-font-size: 20px;");
+        textToType.setStyle("-fx-font-size: 22px; -fx-font-weight: bold;");
+        keyPressedLabel.setStyle("-fx-font-size: 18px;");
+        notHandledLabel.setStyle("-fx-text-fill: red; -fx-font-size: 18px;");
+        statsLabel.setStyle("-fx-font-size: 18px;");
+        textCounterLabel.setStyle("-fx-font-size: 18px;");
+        
+        spaceButton.setPrefWidth(200);
+        spaceButton.setPrefHeight(55);
 
-        Scene scene = new Scene(root, 700, 500);
+        backspaceButton.setPrefWidth(200);
+        backspaceButton.setPrefHeight(55);
+
+        textToType.setPrefWidth(650);
+
+        responseField.setPrefWidth(650);
+        responseField.setPrefHeight(55);
+
+        VBox root = new VBox(
+                textToType,
+                responseField,
+                keyboard,
+                bottomRow,
+                keyPressedLabel,
+                notHandledLabel,
+                statsLabel,
+                navigationRow);
+        
+        root.setAlignment(Pos.CENTER);
+        root.setPadding(new Insets(20));
+        
+        Scene scene = new Scene(root, 900, 650);
 
         nextButton.setOnAction(event -> {
 
             if (currentTextNumber < 6) {
-            currentTextNumber++;
+                currentTextNumber++;
             }
 
             textToType.setText(sampleTexts.get(currentTextNumber));
@@ -195,9 +227,9 @@ public class App extends Application {
 
             root.requestFocus();
         });
-        
+
         resetButton.setOnAction(event -> {
-            
+
             currentTextNumber = 1;
             textToType.setText(sampleTexts.get(currentTextNumber));
 
@@ -217,21 +249,21 @@ public class App extends Application {
 
             root.requestFocus();
         });
-        
+
         scene.setOnKeyPressed(event -> {
             KeyCode keyCode = event.getCode();
             String keyText = event.getText();
             Button virtualKey = keyMap.get(keyCode);
             keyPressedLabel.setText(keyCode.getName());
-            
+
             if (keyCode == KeyCode.SHIFT) {
                 shiftPressed = true;
             }
-            
+
             if (virtualKey != null) {
                 virtualKey.setStyle("-fx-background-color: lightblue;");
                 notHandledLabel.setText("");
-                
+
                 if (keyCode == KeyCode.BACK_SPACE) {
 
                     if (typedText.length() > 0) {
@@ -264,19 +296,19 @@ public class App extends Application {
             if (virtualKey != null) {
                 virtualKey.setStyle("");
             }
-            
+
             if (keyCode == KeyCode.SHIFT) {
                 shiftPressed = false;
             }
         });
-            
+
         stage.setTitle("Typing Tutor");
         stage.setScene(scene);
         stage.show();
-        
+
         root.requestFocus();
     }
-    
+
     public void checkKeyStrokeCorrectness(String typedKey) {
 
         String targetText = textToType.getText();
