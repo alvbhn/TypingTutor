@@ -160,8 +160,13 @@ public class App extends Application {
 
         Button nextButton = new Button("Next");
         Label textCounterLabel = new Label("1 of 6");
+        Button resetButton = new Button("Reset");
 
-        HBox navigationRow = new HBox(10, nextButton, textCounterLabel);
+        HBox navigationRow = new HBox(
+                10,
+                nextButton,
+                textCounterLabel,
+                resetButton);
 
         VBox root = new VBox(textToType, responseField, keyboard, bottomRow,
                 keyPressedLabel, notHandledLabel, statsLabel, navigationRow);
@@ -187,6 +192,28 @@ public class App extends Application {
 
             keyPressedLabel.setText("");
             notHandledLabel.setText("");
+
+            root.requestFocus();
+        });
+        
+        resetButton.setOnAction(event -> {
+            
+            currentTextNumber = 1;
+            textToType.setText(sampleTexts.get(currentTextNumber));
+
+            typedText.setLength(0);
+            responseField.setText("");
+
+            textCounterLabel.setText("1 of 6");
+
+            correctKeyStrokes = 0;
+            incorrectKeyStrokes = 0;
+            statsLabel.setText("Correct Keys: 0\nIncorrect Keys: 0");
+
+            keyPressedLabel.setText("");
+            notHandledLabel.setText("");
+
+            shiftPressed = false;
 
             root.requestFocus();
         });
