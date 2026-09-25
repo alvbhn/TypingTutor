@@ -158,10 +158,38 @@ public class App extends Application {
 
         HBox bottomRow = new HBox(10, spaceButton, backspaceButton);
 
+        Button nextButton = new Button("Next");
+        Label textCounterLabel = new Label("1 of 6");
+
+        HBox navigationRow = new HBox(10, nextButton, textCounterLabel);
+
         VBox root = new VBox(textToType, responseField, keyboard, bottomRow,
-                keyPressedLabel, notHandledLabel, statsLabel);
+                keyPressedLabel, notHandledLabel, statsLabel, navigationRow);
 
         Scene scene = new Scene(root, 700, 500);
+
+        nextButton.setOnAction(event -> {
+
+            if (currentTextNumber < 6) {
+            currentTextNumber++;
+            }
+
+            textToType.setText(sampleTexts.get(currentTextNumber));
+
+            typedText.setLength(0);
+            responseField.setText("");
+
+            textCounterLabel.setText(currentTextNumber + " of 6");
+
+            correctKeyStrokes = 0;
+            incorrectKeyStrokes = 0;
+            statsLabel.setText("Correct Keys: 0\nIncorrect Keys: 0");
+
+            keyPressedLabel.setText("");
+            notHandledLabel.setText("");
+
+            root.requestFocus();
+        });
         
         scene.setOnKeyPressed(event -> {
             KeyCode keyCode = event.getCode();
