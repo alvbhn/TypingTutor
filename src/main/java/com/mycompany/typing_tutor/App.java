@@ -21,11 +21,16 @@ public class App extends Application {
     
     private int currentTextNumber = 1;
     private boolean shiftPressed = false;
+    private int correctKeyStrokes = 0;
+    private int incorrectKeyStrokes = 0;
+    private Label statsLabel = new Label("Correct Keys: 0\nIncorrect Keys: 0");
+    private StringBuilder typedText = new StringBuilder();
+    private Label textToType = new Label("Text to type");
+
 
     @Override
     public void start(Stage stage) {
         
-        Label textToType = new Label("Text to type");
         Label keyPressedLabel = new Label("");
         Label notHandledLabel = new Label("");
         TextField responseField = new TextField();
@@ -103,7 +108,6 @@ public class App extends Application {
         keyboard.add(periodButton, 9, 2);
         
         HashMap<KeyCode, Button> keyMap = new HashMap<>();
-        StringBuilder typedText = new StringBuilder();
         HashMap<Integer, String> sampleTexts = new HashMap<>();
 
         sampleTexts.put(1, "Try typing this text. Do it as quickly and accurately as you can.");
@@ -154,7 +158,8 @@ public class App extends Application {
 
         HBox bottomRow = new HBox(10, spaceButton, backspaceButton);
 
-        VBox root = new VBox(textToType, responseField, keyboard, bottomRow, keyPressedLabel, notHandledLabel);
+        VBox root = new VBox(textToType, responseField, keyboard, bottomRow,
+                keyPressedLabel, notHandledLabel, statsLabel);
 
         Scene scene = new Scene(root, 700, 500);
         
@@ -186,12 +191,13 @@ public class App extends Application {
                         keyText = keyText.toUpperCase();
                     }
 
+                    checkKeyStrokeCorrectness(keyText);
+
                     typedText.append(keyText);
                     responseField.setText(typedText.toString());
                 }
 
             } else {
-                
                 notHandledLabel.setText("Not handled");
             }
         });
@@ -214,6 +220,25 @@ public class App extends Application {
         stage.show();
         
         root.requestFocus();
+    }
+    
+    public void checkKeyStrokeCorrectness(String typedKey) {
+
+        String targetText = textToType.getText();
+        int position = typedText.length();
+
+        if (position < targetText.length()
+                && targetText.charAt(position) == typedKey.charAt(0)) {
+
+            correctKeyStrokes++;
+        } else {
+            incorrectKeyStrokes++;
+        }
+
+        statsLabel.setText(
+                "Correct Keys: " + correctKeyStrokes
+                + "\nIncorrect Keys: " + incorrectKeyStrokes
+        );
     }
 
     public static void main(String[] args) {
