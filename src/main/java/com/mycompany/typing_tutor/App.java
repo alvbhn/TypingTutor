@@ -15,7 +15,8 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 /**
- * JavaFX App
+ * A Typing Tutor application that allows the user to practice typing
+ * using a virtual keyboard.
  *
  * @author Alvee Ahsan Bhuiyan
  */
@@ -163,7 +164,7 @@ public class App extends Application {
         
         Button nextButton = new Button("Go to next input text");
         Label textCounterLabel = new Label("1 of 6");
-        Button resetButton = new Button("Clear text");
+        Button resetButton = new Button("Reset");
 
         HBox buttonRow = new HBox(10, nextButton, resetButton);
         buttonRow.setAlignment(Pos.CENTER);
@@ -309,6 +310,12 @@ public class App extends Application {
         root.requestFocus();
     }
 
+    /**
+     * Checks if the the typed key is correct or incorrect
+     * and updates the number of correct and incorrect keystrokes
+     * 
+     * @param typedKey the key typed by the user
+     */
     public void checkKeyStrokeCorrectness(String typedKey) {
 
         String targetText = textToType.getText();
