@@ -17,7 +17,9 @@ import javafx.stage.Stage;
 /**
  * A Typing Tutor application that allows the user to practice typing
  * using a virtual keyboard.
- *
+ * 
+ * GitHub Link: https://github.com/alvbhn/TypingTutor.git
+ * 
  * @author Alvee Ahsan Bhuiyan
  */
 public class App extends Application {
